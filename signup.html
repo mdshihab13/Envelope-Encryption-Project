@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foodie. — Create Account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0f; --glass: rgba(255,255,255,0.04); --glass-border: rgba(255,255,255,0.09);
+    --accent: #f4a14a; --text: #e8e2d9; --text-muted: rgba(232,226,217,0.45);
+    --error: #ff5f6d; --success: #43e97b; --input-bg: rgba(255,255,255,0.05);
+  }
+  body { min-height:100vh; background:var(--bg); display:flex; align-items:center; justify-content:center; font-family:'DM Sans',sans-serif; color:var(--text); overflow:hidden; }
+  .bg-orbs { position:fixed; inset:0; z-index:0; pointer-events:none; }
+  .orb { position:absolute; border-radius:50%; filter:blur(80px); opacity:.35; animation:float 8s ease-in-out infinite; }
+  .orb-1 { width:500px; height:500px; background:#c0392b; top:-100px; left:-150px; }
+  .orb-2 { width:400px; height:400px; background:#e67e22; bottom:-100px; right:-100px; animation-delay:3s; }
+  .orb-3 { width:300px; height:300px; background:#8e44ad; top:40%; left:50%; transform:translate(-50%,-50%); animation-delay:5s; }
+  @keyframes float { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-30px) scale(1.05)} }
+  .orb-3 { animation-name: float3; }
+  @keyframes float3 { 0%,100%{transform:translate(-50%,-50%) scale(1)} 50%{transform:translate(-50%,calc(-50% - 30px)) scale(1.05)} }
+  .container { position:relative; z-index:1; width:100%; max-width:460px; padding:1rem; }
+  .brand { text-align:center; margin-bottom:2rem; }
+  .brand h1 { font-family:'Playfair Display',serif; font-size:2.8rem; font-weight:700; }
+  .brand h1 span { color:var(--accent); }
+  .brand p { color:var(--text-muted); font-size:.9rem; margin-top:.3rem; font-weight:300; }
+  .card { background:var(--glass); border:1px solid var(--glass-border); border-radius:24px; padding:2.5rem; backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px); box-shadow:0 32px 64px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.06); }
+  .form-group { margin-bottom:1.4rem; }
+  label { display:block; font-size:.78rem; font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:var(--text-muted); margin-bottom:.5rem; }
+  .input-wrap { position:relative; }
+  input { width:100%; padding:.85rem 1.1rem; background:var(--input-bg); border:1px solid var(--glass-border); border-radius:12px; color:var(--text); font-family:'DM Sans',sans-serif; font-size:.95rem; outline:none; transition:border-color .2s,background .2s,box-shadow .2s; }
+  input:focus { border-color:var(--accent); background:rgba(244,161,74,.06); box-shadow:0 0 0 3px rgba(244,161,74,.12); }
+  input::placeholder { color:var(--text-muted); }
+  input.has-toggle { padding-right:3rem; }
+  .toggle-pw { position:absolute; right:.9rem; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem; line-height:1; transition:color .2s; padding:.2rem; }
+  .toggle-pw:hover { color:var(--accent); }
+  .input-hint { font-size:.75rem; color:var(--text-muted); margin-top:.35rem; display:none; }
+  .input-hint.visible { display:block; }
+  .input-hint.error { color:var(--error); }
+  .input-hint.ok { color:var(--success); }
+  .strength-bar { height:3px; border-radius:2px; background:rgba(255,255,255,.08); margin-top:.4rem; overflow:hidden; display:none; }
+  .strength-bar.visible { display:block; }
+  .strength-fill { height:100%; border-radius:2px; transition:width .3s,background .3s; width:0; }
+  .btn { width:100%; padding:.95rem; background:var(--accent); border:none; border-radius:12px; color:#0a0a0f; font-family:'DM Sans',sans-serif; font-size:.95rem; font-weight:500; cursor:pointer; transition:opacity .2s,transform .1s,box-shadow .2s; margin-top:.5rem; box-shadow:0 4px 24px rgba(244,161,74,.3); }
+  .btn:hover { opacity:.9; box-shadow:0 6px 30px rgba(244,161,74,.4); }
+  .btn:active { transform:scale(.98); }
+  .alert { padding:.8rem 1rem; border-radius:10px; font-size:.85rem; margin-bottom:1.2rem; }
+  .alert-error { background:rgba(255,95,109,.12); border:1px solid rgba(255,95,109,.3); color:#ff8a94; }
+  .alert-success { background:rgba(67,233,123,.1); border:1px solid rgba(67,233,123,.25); color:#43e97b; }
+  .footer-link { text-align:center; margin-top:1.5rem; font-size:.85rem; color:var(--text-muted); }
+  .footer-link a { color:var(--accent); text-decoration:none; font-weight:500; }
+  .redirect-msg { text-align:center; font-size:.82rem; color:var(--text-muted); margin-top:.6rem; }
+  @media(max-width:480px){ .card{padding:1.8rem 1.2rem;} .brand h1{font-size:2.2rem;} }
+</style>
+</head>
+<body>
+<div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+<div class="container">
+  <div class="brand"><h1>Foodie<span>.</span></h1><p>Great food, delivered fast</p></div>
+  <div class="card">
+    {% if error %}<div class="alert alert-error">{{ error }}</div>{% endif %}
+    {% if success %}<div class="alert alert-success">{{ success }}</div><div class="redirect-msg" id="redirectMsg">Redirecting to sign in<span id="dots"></span></div>{% endif %}
+    <form method="POST" action="{{ url_for('signup') }}" novalidate id="signupForm">
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="e.g. john_doe" autocomplete="username" maxlength="32">
+        <div class="input-hint" id="username-hint"></div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" maxlength="254">
+        <div class="input-hint" id="email-hint"></div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-wrap">
+          <input type="password" id="password" name="password" placeholder="Min 8 chars, upper+lower+digit" autocomplete="new-password" maxlength="128" class="has-toggle">
+          <button type="button" class="toggle-pw" id="togglePw">👁</button>
+        </div>
+        <div class="strength-bar" id="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+        <div class="input-hint" id="password-hint"></div>
+      </div>
+      <button type="submit" class="btn">Complete Sign Up</button>
+    </form>
+    <div class="footer-link">Already have an account? <a href="{{ url_for('signin') }}">Sign in</a></div>
+  </div>
+</div>
+<script>
+  const togglePw = document.getElementById('togglePw');
+  const pwInput = document.getElementById('password');
+  let shown = false;
+  if(togglePw) togglePw.addEventListener('click', () => {
+    shown = !shown;
+    pwInput.type = shown ? 'text' : 'password';
+    togglePw.textContent = shown ? '🙈' : '👁';
+  });
+
+  function showHint(id, msg, type) { const el=document.getElementById(id); el.textContent=msg; el.className='input-hint visible '+type; }
+  function clearHint(id) { const el=document.getElementById(id); el.className='input-hint'; el.textContent=''; }
+
+  document.getElementById('username').addEventListener('input', function() {
+    if(!this.value){clearHint('username-hint');return;}
+    if(!/^[a-zA-Z0-9_\-]{3,32}$/.test(this.value)) showHint('username-hint','3–32 chars, letters/numbers/_ only','error');
+    else showHint('username-hint','Looks good!','ok');
+  });
+  document.getElementById('email').addEventListener('input', function() {
+    if(!this.value){clearHint('email-hint');return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value)) showHint('email-hint','Enter a valid email','error');
+    else showHint('email-hint','Valid email','ok');
+  });
+  pwInput.addEventListener('input', function() {
+    const v=this.value;
+    const bar=document.getElementById('strength-bar'), fill=document.getElementById('strength-fill');
+    if(!v){bar.className='strength-bar';clearHint('password-hint');return;}
+    bar.className='strength-bar visible';
+    let s=0;
+    if(v.length>=8)s++;if(/[A-Z]/.test(v))s++;if(/[a-z]/.test(v))s++;if(/\d/.test(v))s++;if(/[^A-Za-z0-9]/.test(v))s++;
+    const colors=['#ff5f6d','#ff9a3c','#f4d03f','#43e97b','#00c9ff'];
+    const labels=['Very weak','Weak','Fair','Strong','Very strong'];
+    fill.style.width=(s*20)+'%'; fill.style.background=colors[s-1]||'#ff5f6d';
+    showHint('password-hint',labels[s-1]||'',s>=3?'ok':'error');
+  });
+
+  {% if success %}
+  let dotCount=0;
+  const dots=document.getElementById('dots');
+  setInterval(()=>{dots.textContent='.'.repeat(++dotCount%4);},400);
+  setTimeout(()=>{window.location.href="{{ url_for('signin') }}";},3000);
+  {% endif %}
+</script>
+</body>
+</html>

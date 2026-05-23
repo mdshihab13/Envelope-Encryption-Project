@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foodie. — Sign In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --bg:#0a0a0f; --glass:rgba(255,255,255,.04); --glass-border:rgba(255,255,255,.09);
+    --accent:#f4a14a; --text:#e8e2d9; --text-muted:rgba(232,226,217,.45);
+    --error:#ff5f6d; --input-bg:rgba(255,255,255,.05);
+  }
+  body { min-height:100vh; background:var(--bg); display:flex; align-items:center; justify-content:center; font-family:'DM Sans',sans-serif; color:var(--text); overflow:hidden; }
+  .bg-orbs { position:fixed; inset:0; z-index:0; pointer-events:none; }
+  .orb { position:absolute; border-radius:50%; filter:blur(80px); opacity:.32; animation:float 9s ease-in-out infinite; }
+  .orb-1 { width:450px; height:450px; background:#1a5276; top:-80px; right:-100px; }
+  .orb-2 { width:380px; height:380px; background:#922b21; bottom:-80px; left:-80px; animation-delay:4s; }
+  .orb-3 { width:250px; height:250px; background:#6c3483; top:55%; left:55%; animation-delay:2s; }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-25px)} }
+  .container { position:relative; z-index:1; width:100%; max-width:420px; padding:1rem; }
+  .brand { text-align:center; margin-bottom:2rem; }
+  .brand h1 { font-family:'Playfair Display',serif; font-size:2.8rem; font-weight:700; }
+  .brand h1 span { color:var(--accent); }
+  .brand p { color:var(--text-muted); font-size:.9rem; margin-top:.3rem; font-weight:300; }
+  .card { background:var(--glass); border:1px solid var(--glass-border); border-radius:24px; padding:2.5rem; backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px); box-shadow:0 32px 64px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.06); }
+  .form-group { margin-bottom:1.4rem; }
+  label { display:block; font-size:.78rem; font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:var(--text-muted); margin-bottom:.5rem; }
+  .input-wrap { position:relative; }
+  input { width:100%; padding:.85rem 1.1rem; background:var(--input-bg); border:1px solid var(--glass-border); border-radius:12px; color:var(--text); font-family:'DM Sans',sans-serif; font-size:.95rem; outline:none; transition:border-color .2s,background .2s,box-shadow .2s; }
+  input:focus { border-color:var(--accent); background:rgba(244,161,74,.06); box-shadow:0 0 0 3px rgba(244,161,74,.12); }
+  input::placeholder { color:var(--text-muted); }
+  input.has-toggle { padding-right:3rem; }
+  .toggle-pw { position:absolute; right:.9rem; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem; line-height:1; transition:color .2s; padding:.2rem; }
+  .toggle-pw:hover { color:var(--accent); }
+  .btn { width:100%; padding:.95rem; background:var(--accent); border:none; border-radius:12px; color:#0a0a0f; font-family:'DM Sans',sans-serif; font-size:.95rem; font-weight:500; cursor:pointer; transition:opacity .2s,transform .1s,box-shadow .2s; margin-top:.5rem; box-shadow:0 4px 24px rgba(244,161,74,.3); }
+  .btn:hover { opacity:.9; box-shadow:0 6px 30px rgba(244,161,74,.4); }
+  .btn:active { transform:scale(.98); }
+  .alert { padding:.8rem 1rem; border-radius:10px; font-size:.85rem; margin-bottom:1.2rem; }
+  .alert-error { background:rgba(255,95,109,.12); border:1px solid rgba(255,95,109,.3); color:#ff8a94; }
+  .divider { border:none; border-top:1px solid var(--glass-border); margin:1.5rem 0; }
+  .footer-link { text-align:center; font-size:.85rem; color:var(--text-muted); }
+  .footer-link a { color:var(--accent); text-decoration:none; font-weight:500; }
+  @media(max-width:480px){ .card{padding:1.8rem 1.2rem;} .brand h1{font-size:2.2rem;} }
+</style>
+</head>
+<body>
+<div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+<div class="container">
+  <div class="brand"><h1>Foodie<span>.</span></h1><p>Welcome back</p></div>
+  <div class="card">
+    {% if error %}<div class="alert alert-error">{{ error }}</div>{% endif %}
+    <form method="POST" action="{{ url_for('signin') }}" novalidate id="signinForm">
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        <label for="identifier">Username or Email</label>
+        <input type="text" id="identifier" name="identifier" placeholder="Enter username or email" autocomplete="username" maxlength="254">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-wrap">
+          <input type="password" id="password" name="password" placeholder="Your password" autocomplete="current-password" maxlength="128" class="has-toggle">
+          <button type="button" class="toggle-pw" id="togglePw">👁</button>
+        </div>
+      </div>
+      <button type="submit" class="btn">Sign In</button>
+    </form>
+    <hr class="divider">
+    <div class="footer-link">No account? <a href="{{ url_for('signup') }}">Create one</a></div>
+  </div>
+</div>
+<script>
+  const togglePw = document.getElementById('togglePw');
+  const pwInput = document.getElementById('password');
+  let shown = false;
+  togglePw.addEventListener('click', () => {
+    shown = !shown;
+    pwInput.type = shown ? 'text' : 'password';
+    togglePw.textContent = shown ? '🙈' : '👁';
+  });
+</script>
+</body>
+</html>
